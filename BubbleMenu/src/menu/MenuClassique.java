@@ -13,7 +13,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class MenuClassique extends JMenuBar{
 	
 	private JMenu test1 = new JMenu("File");
-	private JMenu test1_1 = new JMenu("New");
+	private SubMenuFavori test1_1 = new SubMenuFavori("New");
 	private JMenu test1_2 = new JMenu("Send");
 	private JMenu test2 = new JMenu("Edit");
 	
@@ -22,7 +22,7 @@ public class MenuClassique extends JMenuBar{
 	private JMenuItem item2 = new JMenuItem("Close");
 	private JMenuItem item3 = new JMenuItem("Reload");
 	private JMenuItem item4 = new JMenuItem("Version");
-	private JMenuItem item5 = new JMenuItem("Save");
+	private ItemFavoris item5 = new ItemFavoris("Save");
 	private JMenuItem item6 = new JMenuItem("Save As...");
 	private JMenuItem item7 = new JMenuItem("Save a Copy");
 	private JMenuItem item8 = new JMenuItem("Save All");
@@ -30,51 +30,47 @@ public class MenuClassique extends JMenuBar{
 	private JMenuItem item10 = new JMenuItem("Export As PDF");
 	private JMenuItem item11 = new JMenuItem("Preview");
 	private JMenuItem item12 = new JMenuItem("Print Preview");
-	private JMenuItem item13 = new JMenuItem("Print ...");
+	private ItemFavoris item13 = new ItemFavoris("Print ...");
 	private JMenuItem item14 = new JMenuItem("Printer Settings...");
 	private JMenuItem item15 = new JMenuItem("Properties");
 	private JMenuItem item16 = new JMenuItem("Digital Signatures");
-	private JMenuItem item17 = new JMenuItem("Exit");
+	private ItemFavoris item17 = new ItemFavoris("Exit");
 	
 	// SubMenu File-> New
 	private JMenuItem item18 = new JMenuItem("Text Document");
 	private JMenuItem item19 = new JMenuItem("Presentation");
-	private JMenuItem item20 = new JMenuItem("Drawing");
+	private ItemFavoris item20 = new ItemFavoris("Drawing");
 	private JMenuItem item21 = new JMenuItem("HTML Document");
 	private JMenuItem item22 = new JMenuItem("XML form Document");
 	private JMenuItem item23 = new JMenuItem("Master Document");
-	private JMenuItem item24 = new JMenuItem("Formula");
+	private ItemFavoris item24 = new ItemFavoris("Formula");
 	private JMenuItem item25 = new JMenuItem("Labels");
 	private JMenuItem item26 = new JMenuItem("Business Card");
 	private JMenuItem item27 = new JMenuItem("Templates");
 	
 	// SubMenu File-> Send
-	private JMenuItem item28 = new JMenuItem("Email Document");
+	private ItemFavoris item28 = new ItemFavoris("Email Document");
 	private JMenuItem item29 = new JMenuItem("Email as OpenDocument text");
 	private JMenuItem item30 = new JMenuItem("Email as Microsoft Word");
 	private JMenuItem item31 = new JMenuItem("Email as PDF");
 	private JMenuItem item32 = new JMenuItem("Send via Bluetooth");
-	private JMenuItem item33 = new JMenuItem("Create Master Document");
+	private ItemFavoris item33 = new ItemFavoris("Create Master Document");
 	private JMenuItem item34 = new JMenuItem("Create HTML Document");
 	
 	// Menu Edit
-	private JMenuItem item35 = new JMenuItem("Undo");
+	private ItemFavoris item35 = new ItemFavoris("Undo");
 	private JMenuItem item36 = new JMenuItem("Redo");
 	private JMenuItem item37 = new JMenuItem("Repeat");
 	private JMenuItem item38 = new JMenuItem("Cut");
-	private JMenuItem item39 = new JMenuItem("copy");
+	private JMenuItem item39 = new JMenuItem("Copy");
 	private JMenuItem item40 = new JMenuItem("Paste");
-	private JMenuItem item41 = new JMenuItem("Paste special");
+	private ItemFavoris item41 = new ItemFavoris("Paste special");
 	private JMenuItem item42 = new JMenuItem("Select All");
 	private JMenuItem item43 = new JMenuItem("Select text");
 	private JMenuItem item44 = new JMenuItem("Direct Cursor Mode");
-	private JMenuItem item45 = new JMenuItem("Find ...");
+	private ItemFavoris item45 = new ItemFavoris("Find ...");
 	private JMenuItem item46 = new JMenuItem("Find & Replace ...");
 	private JMenuItem item47 = new JMenuItem("Go to Page");
-
-	
-	private JCheckBoxMenuItem jcmi1 = new JCheckBoxMenuItem("Design Mode");
-	private JCheckBoxMenuItem jcmi2 = new JCheckBoxMenuItem("Edit Mode");
 	
 	private JRadioButtonMenuItem jrmi1 = new JRadioButtonMenuItem("Design Mode1");
 	private JRadioButtonMenuItem jrmi2 = new JRadioButtonMenuItem("Edit Mode");
