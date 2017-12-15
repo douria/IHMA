@@ -28,12 +28,12 @@ font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 #main , #deep , #subdeep , #menu1, #menu4 , #menu8
 {
 color: black !important;
-background: #DDA0DD;
+background: #74D0F1;
 }
 
 #main:hover, #deep:hover, #subdeep:hover, #menu1:hover , #menu4:hover ,#menu8:hover, #undo:hover, #repeat:hover, #clear:hover,#select:hover
 {
-  background:#9400D3 !important;
+  background:#74D0F1 !important;
 }
 #primary_nav_wrap ul li
 {
@@ -45,7 +45,7 @@ padding:0;
 
 #primary_nav_wrap ul li:hover
 {
-background:#9400D3
+background:#74D0F1
 }
 
 #primary_nav_wrap ul ul
@@ -76,26 +76,18 @@ top:0;
 left:100%
 }
 
-/*#primary_nav_wrap ul li ul li:hover > ul
-{
-display:block !important;
-position:absolute;;
-}*/
 
 #primary_nav_wrap ul li:hover > ul
 {
 display:block !important;
 position:absolute;;
-/*top:200px;
-left:200px;*/
+
 
 }
 #circleBase {
     position: absolute;
     visibility: hidden;
     border-radius: 50%;
-    /*width: 500px;
-    height: 500px;*/
     background:rgba(221,160,221,0.4);
-    border: 3px solid #DDA0DD;
+    border: 3px solid #74D0F1;
 }
