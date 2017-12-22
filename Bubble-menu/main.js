@@ -1,9 +1,7 @@
-
-//circle showed when active mode bubble menu
+// afficher cercle quand le mode bubble est activé 
 var circle = document.getElementById('circleBase');
 
-
-//all menus for menu1
+//tous les menus pour menu1
 var menu1 = document.getElementById('menu1');
 var subMenu1 = menu1.childNodes[2];
 var deepMenu0 = menu1.children[0].children[1];
@@ -15,11 +13,10 @@ var subdeep1_list = deepMenu2_list.children[0].children[1];
 var subdeep1_desc = deepMenu2_list.children[0].children[0];
 
 
-//all menus for menu2
+//tous les menus pour menu2
 var menu2 = document.getElementById('menu2');
 
-
-//all menus for menu4
+//tous les menus pour menu4
 var menu4 = document.getElementById('menu4');
 var undo = document.getElementById('undo');
 var repeat = document.getElementById('repeat');
@@ -29,7 +26,7 @@ var subMenu4 = menu4.childNodes[2];
 var deepMenu4_list = subMenu4.children[1].children[1];
 var deepMenu4_desc = subMenu4.children[1].children[0];
 
-//all menus for menu8
+//tous les menus pour menu8
 var menu8 = document.getElementById('menu8');
 var subMenu8 = menu8.childNodes[2];
 var originX = 150;
@@ -37,14 +34,12 @@ var originY = 20;
 var menu_width = 102;
 var menu_height = 32;
 
-
-//record the mouse to active the floating menu when the mouse goes to left-down
+//activer le menu flottant 
 var pointLast = [10000, 10000];
 var pointCurrent = [10000, 10000];
 var pointFloat = [0, 0];
 
-
-// state of menu
+// etat du menu
 var isMouseDown = false;
 
 var isActiveMenu1 = false;
@@ -60,17 +55,12 @@ var isActiveSubDeep12 = false;
 var isSubDeepItem1 = false;
 var isSubDeepItem2 = false;
 
-
-
-
 var isActiveSubMenu41 = false;
 var isActiveSubDeep41 = false;
 
 var isActiveSubMenu81 = false;
 
-
 var isActiveFloatMenu = false;
-
 
 var isShowedMenu1 = false;
 var isShowedMenu4 = false;
@@ -79,48 +69,81 @@ var isShowedMenu8 = false;
 var modeFix = false;
 var modeMove = false;
 
-var isInmenu1 = false;
-var isInmenu2 = false;
-var isInmenu4 = false;
-var isInmenu8 = false;
-
-
+var isOnMenu1 = false;
+var isOnMenu2 = false;
+var isOnMenu4 = false;
+var isOnMenu8 = false;
 
 var isBubble = false;
 var isNormal = false;
+//cette fonction permet de desactiver un subMenu
+function disactiveSubMenu(submenu) {
+    submenu.style.display = "none";
+    submenu.style.left = "";
+    submenu.style.top = "";
+}
+
+function distance(ptA, ptB) {
+    var diff = [ptB[0] - ptA[0], ptB[1] - ptA[1]];
+    return Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+}
+
+function showMeu(menu , subMenu){
+	menu.style.background = "#9400D3";
+	subMenu.style.display = "block";
+}
+
+//detecte si la souris est sur un menu
+function IsInMenu(event) {
+
+    if (event.pageX >= originX && event.pageX <= originX + menu_width &&
+        event.pageY >= originY && event.pageY <= originY + menu_height) {
+        isOnMenu1 = true;
+        isOnMenu4 = false;
+        isOnMenu8 = false;
+
+    }
+    if (event.pageX >= originX + 3 * menu_width && event.pageX <= originX + 4 * menu_width &&
+        event.pageY >= originY && event.pageY <= originY + menu_height) {
+        isOnMenu4 = true;
+        isOnMenu1 = false;
+        isOnMenu8 = false;
+    }
+    if (event.pageX >= originX + 7 * menu_width && event.pageX <= originX + 8 * menu_width &&
+        event.pageY >= originY && event.pageY <= originY + menu_height) {
+        isOnMenu8 = true;
+        isOnMenu1 = false;
+        isOnMenu4 = false;
+    }
+}
 
 menu1.onmouseenter = function() {
-    isInmenu1 = true;
-    console.log("test isinmenu1");
+    isOnMenu1 = true;
 }
 menu1.onmouseleave = function() {
-    isInmenu1 = false;
+    isOnMenu1 = false;
 }
 
 menu2.onmouseenter = function() {
-    isInmenu2 = true;
-    console.log("test isinmenu1");
+    isOnMenu2 = true;
 }
 menu2.onmouseleave = function() {
-    isInmenu2 = false;
+    isOnMenu2 = false;
 }
 
 menu4.onmouseenter = function() {
-    isInmenu4 = true;
+    isOnMenu4 = true;
 }
 menu4.onmouseleave = function() {
-    isInmenu4 = false;
+    isOnMenu4 = false;
 }
 
 menu8.onmouseenter = function() {
-    isInmenu8 = true;
+    isOnMenu8 = true;
 }
 menu8.onmouseleave = function() {
-    isInmenu8 = false;
+    isOnMenu8 = false;
 }
-
-
-
 
 document.addEventListener("mousedown", handleMouseDown);
 document.addEventListener("mousemove", handleMouseMove);
@@ -128,7 +151,6 @@ document.addEventListener("mouseup", handleMouseUp);
 
 function handleMouseDown(event) {
 
-//    console.log(event.pageX, event.pageY);
     isMouseDown = true;
     isActiveFloatMenu = false;
     pointLast = [10000, 10000];
@@ -138,8 +160,8 @@ function handleMouseDown(event) {
     subMenu4.style.display = "none";
     subMenu8.style.display = "none";
 
-    console.log(isInmenu1);
-    if ((isInmenu1 || isInmenu4 || isInmenu8) && modeMove == false) {
+    if ((isOnMenu1 || isOnMenu4 || isOnMenu8) && modeMove == false) {
+		//dans ce cas on est dans le cas menu normal
         modeFix = true;
         if (isInmenu1) {
             console.log("branch isInmenu1");
@@ -156,56 +178,35 @@ function handleMouseDown(event) {
             if(event.pageX > deepmenu2_right && event.pageY < deepmenu2_top){
                 isActiveSubMenu12 = false;
                 isActiveSubDeep11 = false;
-//                isShowedMenu1 = false;
-                isInmenu1 = false;
-//                modeFIx = false;
+                isOnMenu1 = false;
                 return;
             }
             isShowedMenu1 = true;
-            menu1.style.background = "#9400D3";
-            subMenu1.style.display = "block";
+            showMeu(menu1 , subMenu1)
 
         }
-        if (isInmenu4) {
+        var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
+        var deepmenu4_right = deepMenu4_desc.getBoundingClientRect().right;
 
-          var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
-          var deepmenu4_right = deepMenu4_desc.getBoundingClientRect().right;
-          if(event.pageX > deepmenu4_right - 0.5*menu_width && event.pageX < deepmenu4_right){
-              isBubble = true;
-              isNormal = false;
-          }
-          if(event.pageX > deepmenu4_right - menu_width && event.pageX < deepmenu4_right - 0.5*menu_width){
-              isBubble = false;
-              isNormal = true;
-          }
-          if(event.pageX > deepmenu4_right && event.pageY > deepmenu4_top){
-              isActiveSubMenu41 = true;
-          }
-            isShowedMenu4 = true;
-            menu4.style.background = "#9400D3";
-            subMenu4.style.display = "block";
-        }
-        if (isInmenu8) {
+        isShowedMenu4 = true;
+        showMeu(menu4 , subMenu4)
+        
+        if (isOnMenu8) {
             isShowedMenu8 = true;
-            menu8.style.background = "#9400D3";
-            subMenu8.style.display = "block";
+            showMeu(menu8 , subMenu8)
         }
         handleMouseMove(event);
-        console.log("initial");
         return;
     }
-    if (!(isInmenu1 || isInmenu2|| isInmenu4 || isInmenu8) && modeFix == false) {
+    if (!(isOnMenu1 || isOnMenu2|| isOnMenu4 || isOnMenu8) && modeFix == false) {
         modeMove = true;
         modeFix = false;
         handleMouseMove(event);
         circle.style.visibility = "visible";
-        console.log("big circle");
-        return;
     } else {
         isShowedMenu1 = false;
         isShowedMenu4 = false;
         isShowedMenu8 = false;
-        console.log("recover");
     }
 }
 
@@ -217,26 +218,13 @@ function handleMouseUp(event) {
     originX = 150;
     originY = 20;
 
-
-    undo.style.background = "white";
-    repeat.style.background = "white";
-    clear.style.background = "white";
-    select.style.background = "white";
-
-
     circle.style.visibility = "hidden";
-
-//    if (isActiveMenu1 && isActiveFloatMenu == false) {
-    // menu1.style.background = "#DDA0DD";
-    // menu4.style.background = "#DDA0DD";
-    // menu8.style.background = "#DDA0DD";
 
     if (isActiveMenu1 && isActiveFloatMenu == false) {
         disactiveSubMenu(subMenu1);
         menu1.style.background = "#DDA0DD";
         isActiveMenu1 = false;
     }
-    console.log("isactivemenu4",isActiveMenu4, isActiveFloatMenu);
     if (isActiveMenu4 && isActiveFloatMenu == false) {
         disactiveSubMenu(subMenu4);
         menu4.style.background = "#DDA0DD";
@@ -248,109 +236,75 @@ function handleMouseUp(event) {
         isActiveMenu8 = false;
     }
 
-        // disactiveSubMenu(subMenu1);
-        // menu1.style.background = "#DDA0DD";
-        // isActiveMenu1 = false;
-        // disactiveSubMenu(subMenu4);
-        // menu4.style.background = "#DDA0DD";
-        // isActiveMenu4 = false;
-        // disactiveSubMenu(subMenu8);
-        // menu8.style.background = "#DDA0DD";
-        // isActiveMenu8 = false;
-
-    if (isActiveSubMenu11) {
-        if (!isShowedMenu1) {
-            disactiveSubMenu(deepMenu1_list);
-            deepMenu1_desc.style.background = "#DDA0DD";
-            menu1.style.background = "#DDA0DD";
-            isActiveSubMenu11 = false;
-            modeFix = false;
-        }
+    if (isActiveSubMenu11 && !isShowedMenu1 ) {
+		disactiveSubMenu(deepMenu1_list);
+		deepMenu1_desc.style.background = "#DDA0DD";
+		menu1.style.background = "#DDA0DD";
+		isActiveSubMenu11 = false;
+		modeFix = false; 
 
     }
-    if (isActiveSubMenu12) {
-        if (!isShowedMenu1) {
-            disactiveSubMenu(deepMenu2_list);
-            deepMenu2_desc.style.background = "#DDA0DD";
-            menu1.style.background = "#DDA0DD";
-            isActiveSubMenu12 = false;
-            modeFix = false;
-        }
-
+    if (isActiveSubMenu12 && !isShowedMenu1) {
+		disactiveSubMenu(deepMenu2_list);
+        deepMenu2_desc.style.background = "#DDA0DD";
+        menu1.style.background = "#DDA0DD";
+        isActiveSubMenu12 = false;
+        modeFix = false;;
     }
 
-    if (isActiveSubMenu41) {
-        if (!isShowedMenu4) {
-            disactiveSubMenu(deepMenu4_list);
-            deepMenu4_desc.style.background = "#DDA0DD";
-            menu4.style.background = "#DDA0DD";
-            isActiveSubMenu41 = false;
-            modeFix = false;
-        }
+    if (isActiveSubMenu41 && !isShowedMenu4) {
+		disactiveSubMenu(deepMenu4_list);
+        deepMenu4_desc.style.background = "#DDA0DD";
+        menu4.style.background = "#DDA0DD";
+        isActiveSubMenu41 = false;
+        modeFix = false;
     }
     if(isNormal){
-      disactiveSubMenu(deepMenu4_list);
-      deepMenu4_desc.style.background = "#DDA0DD";
-      //menu4.style.background = "#DDA0DD";
+        disactiveSubMenu(deepMenu4_list);
+        deepMenu4_desc.style.background = "#DDA0DD";
       isActiveSubMenu41 = false;
       modeFix = false;
     }
 
-    if (isActiveSubMenu81) {
-        if (!isShowedMenu8) {
-            subMenu8.children[4].children[0].style.background = "#DDA0DD";
-            menu8.style.background = "#DDA0DD";
-            isActiveSubMenu81 = false;
-            modeFix = false;
-        }
+    if (isActiveSubMenu81 && !isShowedMenu8) {
+		subMenu8.children[4].children[0].style.background = "#DDA0DD";
+		menu8.style.background = "#DDA0DD";
+		isActiveSubMenu81 = false;
+		modeFix = false;
     }
 
-    if (isActiveSubDeep11) {
-        if (!isShowedMenu1) {
-            disactiveSubMenu(subdeep1_list);
-            subdeep1_desc.style.background = "#DDA0DD";
-            isActiveSubDeep11 = false;
-            modeFix = false;
-        }
+    if (isActiveSubDeep11 && !isShowedMenu1) {
+		disactiveSubMenu(subdeep1_list);
+        subdeep1_desc.style.background = "#DDA0DD";
+        isActiveSubDeep11 = false;
+        modeFix = false;
     }
 
-    if (isActiveSubDeep12) {
-        if (!isShowedMenu1) {
-            //            disactiveSubMenu(subdeep2);
-            deepMenu2_list.children[4].children[0].style.background = "#DDA0DD";
-            isActiveSubDeep12 = false;
-            modeFix = false;
-        }
+    if (isActiveSubDeep12 && !isShowedMenu1) {
+		deepMenu2_list.children[4].children[0].style.background = "#DDA0DD";
+        isActiveSubDeep12 = false;
+        modeFix = false;
     }
 
-    if (isActiveSubDeep41) {
-        if (!isShowedMenu4) {
-            //            disactiveSubMenu(subdeep4);
-            deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
-            isActiveSubDeep41 = false;
-            modeFix = false;
-        }
+    if (isActiveSubDeep41 && !isShowedMenu4) {
+		deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
+        isActiveSubDeep41 = false;
+        modeFix = false;
     }
 
 
-    if (isSubDeepItem1) {
-        if (!isShowedMenu1) {
-            disactiveSubMenu(subdeep1_list);
-            subdeep1_list.children[0].children[0].style.background = "#DDA0DD";
-            isSubDeepItem1 = false;
-            modeFix = false;
-        }
+    if (isSubDeepItem1 && !isShowedMenu1) {
+		disactiveSubMenu(subdeep1_list);
+        subdeep1_list.children[0].children[0].style.background = "#DDA0DD";
+        isSubDeepItem1 = false;
+        modeFix = false;
     }
 
-    if (isSubDeepItem2) {
-        if (!isShowedMenu1) {
-            subdeep1_list.children[2].children[0].style.background = "#DDA0DD";
-            isSubDeepItem2 = false;
-            modeFix = false;
-        }
+    if (isSubDeepItem2 && !isShowedMenu1) {
+		subdeep1_list.children[2].children[0].style.background = "#DDA0DD";
+        isSubDeepItem2 = false;
+        modeFix = false;
     }
-
-
 
     isBubble = false;
     isNormal = false;
@@ -369,7 +323,6 @@ function handleMouseMove(event) {
       isBubble = false;
       isNormal = true;
   }
-  console.log(isBubble, isNormal);
     if (isMouseDown == true && modeMove == true && isActiveFloatMenu == false) {
         var capturedPoint = getPointCapturedByBubbleCursor(event);
         var currentPoint = [event.pageX, event.pageY];
@@ -385,7 +338,6 @@ function handleMouseMove(event) {
             isActiveFloatMenu == false) {
             isActiveFloatMenu = true;
             pointFloat = [pointCurrent[0], pointCurrent[1]];
-            console.log("float menu!");
         }
         if (isActiveMenu1) {
             activeSubMenu(subMenu1);
@@ -423,12 +375,10 @@ function handleMouseMove(event) {
 
     }
     if (isMouseDown == true && (modeFix == true || isActiveFloatMenu == true) && isShowedMenu1) {
-        console.log("handlemove menu1");
         circle.style.visibility = "visible";
         var capturedPoint = getMenuCapturedByBubbleCursor(event);
         var currentPoint = [event.pageX, event.pageY];
         var radius = distance(capturedPoint, currentPoint);
-        //console.log(radius);
         circle.style.width = (2 * radius) + "px";
         circle.style.height = (2 * radius) + "px";
         circle.style.left = (event.pageX - radius) + "px";
@@ -436,20 +386,14 @@ function handleMouseMove(event) {
 
         if (isActiveSubMenu11) {
             activeSubMenu(deepMenu1_list);
-//            console.log("active deepMenu1_list before");
             subMenu1.children[1].children[1].style.display = "block";
-//            console.log("active deepMenu1_list after");
-            //deepMenu1_desc.style.display = "block";
             deepMenu1_desc.style.background = "#9400D3";
-            //deepMenu1_list.style.background = "#9400D3";
         }
         if (isActiveSubMenu12) {
             activeSubMenu(deepMenu2_list);
-              console.log("active deepMenu2_list");
             deepMenu2_desc.style.background = "#9400D3";
         }
         if (!isActiveSubMenu11) {
-            console.log("disactive deepMenu1_list");
             disactiveSubMenu(deepMenu1_list);
             deepMenu1_desc.style.background = "#DDA0DD";
         }
@@ -464,32 +408,20 @@ function handleMouseMove(event) {
 
         if (isActiveSubDeep11) {
             activeSubMenu(subdeep1_list);
-            //deepMenu1_desc.style.display = "block";
-            //deepMenu1_list.children[0].children[0].style.display = "block";
             subdeep1_desc.style.background = "#9400D3";
-            //deepMenu1_list.style.background = "#9400D3";
         }
         if (isActiveSubDeep12) {
-            //activeSubMenu(subdeep2);
-            //deepMenu1_list.children[4].children[0].style.display = "block";
             deepMenu2_list.children[4].children[0].style.background = "#9400D3";
         }
         if (!isActiveSubDeep11) {
             disactiveSubMenu(subdeep1_list);
             isSubDeepItem1 = false;
             isSubDeepItem2 = false;
-            //deepMenu1_desc.style.display = "block";
             subdeep1_desc.style.background = "#DDA0DD";
-            //deepMenu1_list.style.background = "#9400D3";
         }
         if (!isActiveSubDeep12) {
-            //disactiveSubMenu(subdeep2);
             deepMenu2_list.children[4].children[0].style.background = "#DDA0DD";
         }
-
-
-
-
         if (isSubDeepItem1) {
             subdeep1_list.children[0].children[0].style.background = "#9400D3";
         }
@@ -502,11 +434,8 @@ function handleMouseMove(event) {
         if (!isSubDeepItem2) {
             subdeep1_list.children[2].children[0].style.background = "#DDA0DD";
         }
-
-
     }
     if (isMouseDown == true && (modeFix == true || isActiveFloatMenu == true) && isShowedMenu4) {
-        console.log("handlemove menu4");
         circle.style.visibility = "visible";
         var capturedPoint = getMenuCapturedByBubbleCursor(event);
         var currentPoint = [event.pageX, event.pageY];
@@ -529,14 +458,8 @@ function handleMouseMove(event) {
         if (!isActiveSubDeep41) {
             deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
         }
-        undo.style.background = "white";
-        repeat.style.background = "white";
-        clear.style.background = "white";
-        select.style.background = "white";
-
     }
     if (isMouseDown == true && (modeFix == true || isActiveFloatMenu == true) && isShowedMenu4 && isBubble && !isNormal) {
-        console.log("handlemove menu4");
         circle.style.visibility = "visible";
         var capturedPoint = getMenuCapturedByBubbleCursor(event);
         var currentPoint = [event.pageX, event.pageY];
@@ -559,11 +482,6 @@ function handleMouseMove(event) {
         if (!isActiveSubDeep41) {
             deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
         }
-        undo.style.background = "white";
-        repeat.style.background = "white";
-        clear.style.background = "white";
-        select.style.background = "white";
-
     }
     if (isMouseDown == true && (modeFix == true || isActiveFloatMenu == true) && isShowedMenu4 && isNormal && !isBubble){
         var undo_top = undo.getBoundingClientRect().top - 5;
@@ -616,8 +534,6 @@ function handleMouseMove(event) {
             circle.style.visibility = "hidden";
             isActiveSubMenu41 = true;
         }
-
-
         if (isActiveSubMenu41) {
             activeSubMenu(deepMenu4_list);
             deepMenu4_desc.style.background = "#9400D3";
@@ -630,10 +546,8 @@ function handleMouseMove(event) {
             disactiveSubMenu(deepMenu4_list);
             deepMenu4_desc.style.background = "#DDA0DD";
         }
-
     }
     if (isMouseDown == true && (modeFix == true || isActiveFloatMenu == true) && isShowedMenu8) {
-        console.log("handlemove menu8");
         circle.style.visibility = "visible";
         var capturedPoint = getMenuCapturedByBubbleCursor(event);
         var currentPoint = [event.pageX, event.pageY];
@@ -648,45 +562,8 @@ function handleMouseMove(event) {
         if (!isActiveSubMenu81) {
             subMenu8.children[4].children[0].style.background = "#DDA0DD";
         }
-
-
-    }
-
-}
-
-
-
-
-//tool functions
-function distance(ptA, ptB) {
-    var diff = [ptB[0] - ptA[0], ptB[1] - ptA[1]];
-    return Math.sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-}
-
-function IsInMenu(event) {
-
-    if (event.pageX >= originX && event.pageX <= originX + menu_width &&
-        event.pageY >= originY && event.pageY <= originY + menu_height) {
-        isInmenu1 = true;
-        isInmenu4 = false;
-        isInmenu8 = false;
-
-    }
-    if (event.pageX >= originX + 3 * menu_width && event.pageX <= originX + 4 * menu_width &&
-        event.pageY >= originY && event.pageY <= originY + menu_height) {
-        isInmenu4 = true;
-        isInmenu1 = false;
-        isInmenu8 = false;
-    }
-    if (event.pageX >= originX + 7 * menu_width && event.pageX <= originX + 8 * menu_width &&
-        event.pageY >= originY && event.pageY <= originY + menu_height) {
-        isInmenu8 = true;
-        isInmenu1 = false;
-        isInmenu4 = false;
     }
 }
-
-
 
 function activeSubMenu(submenu) {
     submenu.style.display = "block";
@@ -702,15 +579,7 @@ function activeSubMenu(submenu) {
         submenu.style.left = (event.pageX - originX - 7 * menu_width) + "px";
         submenu.style.top = (event.pageY - originY) + "px";
     }
-
 }
-
-function disactiveSubMenu(submenu) {
-    submenu.style.display = "none";
-    submenu.style.left = "";
-    submenu.style.top = "";
-}
-
 
 function getMenuCapturedByBubbleCursor(event) {
     var point = [];
@@ -767,7 +636,6 @@ function getMenuCapturedByBubbleCursor(event) {
                 } else {
                     point = [event.pageX, deepMenu1_top];
                 }
-                console.log("here");
                 isActiveSubMenu11 = true;
                 isActiveSubMenu12 = false;
                 return point;
@@ -959,10 +827,7 @@ function getMenuCapturedByBubbleCursor(event) {
             }
 
         }
-
-
         if (event.pageX > subdeep2_right && isActiveSubDeep12) {
-            console.log("subdeep2");
             if (event.pageY <= subdeep2_top) {
                 point = [subdeep2_right, subdeep2_top];
                 return point;
@@ -1088,11 +953,10 @@ function getMenuCapturedByBubbleCursor(event) {
 }
 
 
-// when we in the mode "modeMove", we have to find the closest point from mouse
+// trouver le point le plus proche du curseur
 function getPointCapturedByBubbleCursor(event) {
     var point = [];
-    // mouse above menu
-    //if (event.pageY > originY + menu_height) {
+    // mouse au dessus du menu
     var bottom = menu1.getBoundingClientRect().bottom;
     var left = menu1.getBoundingClientRect().left;
     var right = menu1.getBoundingClientRect().right;
