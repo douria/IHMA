@@ -6,9 +6,13 @@ var circle = document.getElementById('circleBase');
 //all menus for menu1
 var menu1 = document.getElementById('menu1');
 var subMenu1 = menu1.childNodes[2];
-var deepMenu1 = subMenu1.children[1].children[1];
-var deepMenu2 = subMenu1.children[7].children[1];
-var subdeep1 = deepMenu2.children[0].children[1];
+var deepMenu0 = menu1.children[0].children[1];
+var deepMenu1_list = subMenu1.children[1].children[1];
+var deepMenu1_desc = subMenu1.children[1].children[0];
+var deepMenu2_list = subMenu1.children[13].children[1];
+var deepMenu2_desc = subMenu1.children[13].children[0];
+var subdeep1_list = deepMenu2_list.children[0].children[1];
+var subdeep1_desc = deepMenu2_list.children[0].children[0];
 
 
 //all menus for menu2
@@ -22,7 +26,8 @@ var repeat = document.getElementById('repeat');
 var clear = document.getElementById('clear');
 var select = document.getElementById('select');
 var subMenu4 = menu4.childNodes[2];
-var deepMenu4 = subMenu4.children[1].children[1];
+var deepMenu4_list = subMenu4.children[1].children[1];
+var deepMenu4_desc = subMenu4.children[1].children[0];
 
 //all menus for menu8
 var menu8 = document.getElementById('menu8');
@@ -117,11 +122,6 @@ menu8.onmouseleave = function() {
 
 
 
-
-
-
-
-
 document.addEventListener("mousedown", handleMouseDown);
 document.addEventListener("mousemove", handleMouseMove);
 document.addEventListener("mouseup", handleMouseUp);
@@ -143,13 +143,13 @@ function handleMouseDown(event) {
         modeFix = true;
         if (isInmenu1) {
             console.log("branch isInmenu1");
-            var deepmenu2_top = subMenu1.children[7].children[0].getBoundingClientRect().top - 5;
-            var deepmenu2_right = subMenu1.children[7].children[0].getBoundingClientRect().right;
+            var deepmenu2_top = deepMenu2_desc.getBoundingClientRect().top - 5;
+            var deepmenu2_right = deepMenu2_desc.getBoundingClientRect().right;
             if(event.pageX > deepmenu2_right && event.pageY > deepmenu2_top){
                 isActiveSubMenu12 = true;
             }
-            var subdeep1_right = deepMenu2.children[0].children[0].getBoundingClientRect().right;
-            var subdeep1_top = deepMenu2.children[0].children[0].getBoundingClientRect().top - 5;
+            var subdeep1_right = subdeep1_desc.getBoundingClientRect().right;
+            var subdeep1_top = subdeep1_desc.getBoundingClientRect().top - 5;
             if(event.pageX > subdeep1_right && event.pageY > subdeep1_top){
                 isActiveSubDeep11 = true;
             }
@@ -168,8 +168,8 @@ function handleMouseDown(event) {
         }
         if (isInmenu4) {
 
-          var deepmenu4_top = subMenu4.children[1].children[0].getBoundingClientRect().top - 5;
-          var deepmenu4_right = subMenu4.children[1].children[0].getBoundingClientRect().right;
+          var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
+          var deepmenu4_right = deepMenu4_desc.getBoundingClientRect().right;
           if(event.pageX > deepmenu4_right - 0.5*menu_width && event.pageX < deepmenu4_right){
               isBubble = true;
               isNormal = false;
@@ -260,8 +260,8 @@ function handleMouseUp(event) {
 
     if (isActiveSubMenu11) {
         if (!isShowedMenu1) {
-            disactiveSubMenu(deepMenu1);
-            subMenu1.children[1].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu1_list);
+            deepMenu1_desc.style.background = "#DDA0DD";
             menu1.style.background = "#DDA0DD";
             isActiveSubMenu11 = false;
             modeFix = false;
@@ -270,8 +270,8 @@ function handleMouseUp(event) {
     }
     if (isActiveSubMenu12) {
         if (!isShowedMenu1) {
-            disactiveSubMenu(deepMenu2);
-            subMenu1.children[7].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu2_list);
+            deepMenu2_desc.style.background = "#DDA0DD";
             menu1.style.background = "#DDA0DD";
             isActiveSubMenu12 = false;
             modeFix = false;
@@ -281,16 +281,16 @@ function handleMouseUp(event) {
 
     if (isActiveSubMenu41) {
         if (!isShowedMenu4) {
-            disactiveSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#DDA0DD";
             menu4.style.background = "#DDA0DD";
             isActiveSubMenu41 = false;
             modeFix = false;
         }
     }
     if(isNormal){
-      disactiveSubMenu(deepMenu4);
-      subMenu4.children[1].children[0].style.background = "#DDA0DD";
+      disactiveSubMenu(deepMenu4_list);
+      deepMenu4_desc.style.background = "#DDA0DD";
       //menu4.style.background = "#DDA0DD";
       isActiveSubMenu41 = false;
       modeFix = false;
@@ -307,8 +307,8 @@ function handleMouseUp(event) {
 
     if (isActiveSubDeep11) {
         if (!isShowedMenu1) {
-            disactiveSubMenu(subdeep1);
-            deepMenu2.children[0].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(subdeep1_list);
+            subdeep1_desc.style.background = "#DDA0DD";
             isActiveSubDeep11 = false;
             modeFix = false;
         }
@@ -317,7 +317,7 @@ function handleMouseUp(event) {
     if (isActiveSubDeep12) {
         if (!isShowedMenu1) {
             //            disactiveSubMenu(subdeep2);
-            deepMenu2.children[4].children[0].style.background = "#DDA0DD";
+            deepMenu2_list.children[4].children[0].style.background = "#DDA0DD";
             isActiveSubDeep12 = false;
             modeFix = false;
         }
@@ -326,7 +326,7 @@ function handleMouseUp(event) {
     if (isActiveSubDeep41) {
         if (!isShowedMenu4) {
             //            disactiveSubMenu(subdeep4);
-            deepMenu4.children[4].children[0].style.background = "#DDA0DD";
+            deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
             isActiveSubDeep41 = false;
             modeFix = false;
         }
@@ -335,8 +335,8 @@ function handleMouseUp(event) {
 
     if (isSubDeepItem1) {
         if (!isShowedMenu1) {
-            disactiveSubMenu(subdeep1);
-            subdeep1.children[0].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(subdeep1_list);
+            subdeep1_list.children[0].children[0].style.background = "#DDA0DD";
             isSubDeepItem1 = false;
             modeFix = false;
         }
@@ -344,7 +344,7 @@ function handleMouseUp(event) {
 
     if (isSubDeepItem2) {
         if (!isShowedMenu1) {
-            subdeep1.children[3].children[0].style.background = "#DDA0DD";
+            subdeep1_list.children[2].children[0].style.background = "#DDA0DD";
             isSubDeepItem2 = false;
             modeFix = false;
         }
@@ -359,8 +359,8 @@ function handleMouseUp(event) {
 }
 
 function handleMouseMove(event) {
-  var deepmenu4_top = subMenu4.children[1].children[0].getBoundingClientRect().top - 5;
-  var deepmenu4_right = subMenu4.children[1].children[0].getBoundingClientRect().right;
+  var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
+  var deepmenu4_right = deepMenu4_desc.getBoundingClientRect().right;
   if(event.pageX > deepmenu4_right - 0.5*menu_width && event.pageX < deepmenu4_right){
       isBubble = true;
       isNormal = false;
@@ -435,72 +435,72 @@ function handleMouseMove(event) {
         circle.style.top = (event.pageY - radius) + "px";
 
         if (isActiveSubMenu11) {
-            activeSubMenu(deepMenu1);
-//            console.log("active deepMenu1 before");
+            activeSubMenu(deepMenu1_list);
+//            console.log("active deepMenu1_list before");
             subMenu1.children[1].children[1].style.display = "block";
-//            console.log("active deepMenu1 after");
-            //subMenu1.children[1].children[0].style.display = "block";
-            subMenu1.children[1].children[0].style.background = "#9400D3";
-            //deepMenu1.style.background = "#9400D3";
+//            console.log("active deepMenu1_list after");
+            //deepMenu1_desc.style.display = "block";
+            deepMenu1_desc.style.background = "#9400D3";
+            //deepMenu1_list.style.background = "#9400D3";
         }
         if (isActiveSubMenu12) {
-            activeSubMenu(deepMenu2);
-              console.log("active deepMenu2");
-            subMenu1.children[7].children[0].style.background = "#9400D3";
+            activeSubMenu(deepMenu2_list);
+              console.log("active deepMenu2_list");
+            deepMenu2_desc.style.background = "#9400D3";
         }
         if (!isActiveSubMenu11) {
-            console.log("disactive deepMenu1");
-            disactiveSubMenu(deepMenu1);
-            subMenu1.children[1].children[0].style.background = "#DDA0DD";
+            console.log("disactive deepMenu1_list");
+            disactiveSubMenu(deepMenu1_list);
+            deepMenu1_desc.style.background = "#DDA0DD";
         }
         if (!isActiveSubMenu12) {
             isActiveSubDeep11 = false;
             isActiveSubDeep12 = false;
-            disactiveSubMenu(deepMenu2);
-            subMenu1.children[7].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu2_list);
+            deepMenu2_desc.style.background = "#DDA0DD";
         }
 
 
 
         if (isActiveSubDeep11) {
-            activeSubMenu(subdeep1);
-            //subMenu1.children[1].children[0].style.display = "block";
-            //deepMenu1.children[0].children[0].style.display = "block";
-            deepMenu2.children[0].children[0].style.background = "#9400D3";
-            //deepMenu1.style.background = "#9400D3";
+            activeSubMenu(subdeep1_list);
+            //deepMenu1_desc.style.display = "block";
+            //deepMenu1_list.children[0].children[0].style.display = "block";
+            subdeep1_desc.style.background = "#9400D3";
+            //deepMenu1_list.style.background = "#9400D3";
         }
         if (isActiveSubDeep12) {
             //activeSubMenu(subdeep2);
-            //deepMenu1.children[4].children[0].style.display = "block";
-            deepMenu2.children[4].children[0].style.background = "#9400D3";
+            //deepMenu1_list.children[4].children[0].style.display = "block";
+            deepMenu2_list.children[4].children[0].style.background = "#9400D3";
         }
         if (!isActiveSubDeep11) {
-            disactiveSubMenu(subdeep1);
+            disactiveSubMenu(subdeep1_list);
             isSubDeepItem1 = false;
             isSubDeepItem2 = false;
-            //subMenu1.children[1].children[0].style.display = "block";
-            deepMenu2.children[0].children[0].style.background = "#DDA0DD";
-            //deepMenu1.style.background = "#9400D3";
+            //deepMenu1_desc.style.display = "block";
+            subdeep1_desc.style.background = "#DDA0DD";
+            //deepMenu1_list.style.background = "#9400D3";
         }
         if (!isActiveSubDeep12) {
             //disactiveSubMenu(subdeep2);
-            deepMenu2.children[4].children[0].style.background = "#DDA0DD";
+            deepMenu2_list.children[4].children[0].style.background = "#DDA0DD";
         }
 
 
 
 
         if (isSubDeepItem1) {
-            subdeep1.children[0].children[0].style.background = "#9400D3";
+            subdeep1_list.children[0].children[0].style.background = "#9400D3";
         }
         if (isSubDeepItem2) {
-            subdeep1.children[3].children[0].style.background = "#9400D3";
+            subdeep1_list.children[2].children[0].style.background = "#9400D3";
         }
         if (!isSubDeepItem1) {
-            subdeep1.children[0].children[0].style.background = "#DDA0DD";
+            subdeep1_list.children[0].children[0].style.background = "#DDA0DD";
         }
         if (!isSubDeepItem2) {
-            subdeep1.children[3].children[0].style.background = "#DDA0DD";
+            subdeep1_list.children[2].children[0].style.background = "#DDA0DD";
         }
 
 
@@ -516,18 +516,18 @@ function handleMouseMove(event) {
         circle.style.left = (event.pageX - radius) + "px";
         circle.style.top = (event.pageY - radius) + "px";
         if (isActiveSubMenu41) {
-            activeSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#9400D3";
+            activeSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#9400D3";
         }
         if (!isActiveSubMenu41) {
-            disactiveSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#DDA0DD";
         }
         if (isActiveSubDeep41) {
-            deepMenu4.children[4].children[0].style.background = "#9400D3";
+            deepMenu4_list.children[4].children[0].style.background = "#9400D3";
         }
         if (!isActiveSubDeep41) {
-            deepMenu4.children[4].children[0].style.background = "#DDA0DD";
+            deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
         }
         undo.style.background = "white";
         repeat.style.background = "white";
@@ -546,18 +546,18 @@ function handleMouseMove(event) {
         circle.style.left = (event.pageX - radius) + "px";
         circle.style.top = (event.pageY - radius) + "px";
         if (isActiveSubMenu41) {
-            activeSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#9400D3";
+            activeSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#9400D3";
         }
         if (!isActiveSubMenu41) {
-            disactiveSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#DDA0DD";
         }
         if (isActiveSubDeep41) {
-            deepMenu4.children[4].children[0].style.background = "#9400D3";
+            deepMenu4_list.children[4].children[0].style.background = "#9400D3";
         }
         if (!isActiveSubDeep41) {
-            deepMenu4.children[4].children[0].style.background = "#DDA0DD";
+            deepMenu4_list.children[4].children[0].style.background = "#DDA0DD";
         }
         undo.style.background = "white";
         repeat.style.background = "white";
@@ -575,8 +575,8 @@ function handleMouseMove(event) {
         var select_top = select.getBoundingClientRect().top - 5;
         var select_bottom = select.getBoundingClientRect().bottom;
 
-        var deepmenu4_top = subMenu4.children[1].children[0].getBoundingClientRect().top - 5;
-        var deepmenu4_bottom = subMenu4.children[1].children[0].getBoundingClientRect().bottom;
+        var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
+        var deepmenu4_bottom = deepMenu4_desc.getBoundingClientRect().bottom;
 
         if(event.pageY > undo_top && event.pageY < undo_bottom){
             undo.style.background = "#9400D3";
@@ -611,24 +611,24 @@ function handleMouseMove(event) {
             isActiveSubMenu41 = false;
         }
         if(event.pageY > deepmenu4_top && event.pageY < deepmenu4_bottom){
-            subMenu4.children[1].children[0].style.background = "#9400D3";
-            activeSubMenu(deepMenu4);
+            deepMenu4_desc.style.background = "#9400D3";
+            activeSubMenu(deepMenu4_list);
             circle.style.visibility = "hidden";
             isActiveSubMenu41 = true;
         }
 
 
         if (isActiveSubMenu41) {
-            activeSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#9400D3";
+            activeSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#9400D3";
             undo.style.background = "white";
             repeat.style.background = "white";
             clear.style.background = "white";
             select.style.background = "white";
         }
         if (!isActiveSubMenu41) {
-            disactiveSubMenu(deepMenu4);
-            subMenu4.children[1].children[0].style.background = "#DDA0DD";
+            disactiveSubMenu(deepMenu4_list);
+            deepMenu4_desc.style.background = "#DDA0DD";
         }
 
     }
@@ -716,17 +716,17 @@ function getMenuCapturedByBubbleCursor(event) {
     var point = [];
     var submenu1_right = subMenu1.getBoundingClientRect().right;
     var submenu1_left = subMenu1.getBoundingClientRect().left  - 5;
-    var deepmenu1_top = subMenu1.children[1].children[0].getBoundingClientRect().top - 5;
-    var deepmenu1_bottom = subMenu1.children[1].children[0].getBoundingClientRect().bottom;
-    var deepmenu1_right = subMenu1.children[1].children[0].getBoundingClientRect().right;
-    var deepmenu2_top = subMenu1.children[7].children[0].getBoundingClientRect().top - 5;
-    var deepmenu2_bottom = subMenu1.children[7].children[0].getBoundingClientRect().bottom;
-    var deepmenu2_right = subMenu1.children[7].children[0].getBoundingClientRect().right;
+    var deepMenu1_top = deepMenu1_desc.getBoundingClientRect().top - 5;
+    var deepMenu1_bottom = deepMenu1_desc.getBoundingClientRect().bottom;
+    var deepMenu1_right = deepMenu1_desc.getBoundingClientRect().right;
+    var deepmenu2_top = deepMenu2_desc.getBoundingClientRect().top - 5;
+    var deepmenu2_bottom = deepMenu2_desc.getBoundingClientRect().bottom;
+    var deepmenu2_right = deepMenu2_desc.getBoundingClientRect().right;
 
-    var deepmenu4_top = subMenu4.children[1].children[0].getBoundingClientRect().top - 5;
-    var deepmenu4_bottom = subMenu4.children[1].children[0].getBoundingClientRect().bottom;
-    var deepmenu4_right = subMenu4.children[1].children[0].getBoundingClientRect().right;
-    var deepmenu4_left = subMenu4.children[1].children[0].getBoundingClientRect().left - 5;
+    var deepmenu4_top = deepMenu4_desc.getBoundingClientRect().top - 5;
+    var deepmenu4_bottom = deepMenu4_desc.getBoundingClientRect().bottom;
+    var deepmenu4_right = deepMenu4_desc.getBoundingClientRect().right;
+    var deepmenu4_left = deepMenu4_desc.getBoundingClientRect().left - 5;
 
     var deepmenu8_top = subMenu8.children[4].children[0].getBoundingClientRect().top - 5;
     var deepmenu8_bottom = subMenu8.children[4].children[0].getBoundingClientRect().bottom;
@@ -735,24 +735,24 @@ function getMenuCapturedByBubbleCursor(event) {
 
 
 
-    var subdeep1_right = deepMenu2.children[0].children[0].getBoundingClientRect().right;
-    var subdeep1_top = deepMenu2.children[0].children[0].getBoundingClientRect().top - 5;
-    var subdeep1_bottom = deepMenu2.children[0].children[0].getBoundingClientRect().bottom;
-    var subdeep2_right = deepMenu2.children[4].children[0].getBoundingClientRect().right;
-    var subdeep2_top = deepMenu2.children[4].children[0].getBoundingClientRect().top - 5;
-    var subdeep2_bottom = deepMenu2.children[4].children[0].getBoundingClientRect().bottom;
+    var subdeep1_right = subdeep1_desc.getBoundingClientRect().right;
+    var subdeep1_top = subdeep1_desc.getBoundingClientRect().top - 5;
+    var subdeep1_bottom = subdeep1_desc.getBoundingClientRect().bottom;
+    var subdeep2_right = deepMenu2_list.children[4].children[0].getBoundingClientRect().right;
+    var subdeep2_top = deepMenu2_list.children[4].children[0].getBoundingClientRect().top - 5;
+    var subdeep2_bottom = deepMenu2_list.children[4].children[0].getBoundingClientRect().bottom;
 
-    var subdeep4_right = deepMenu4.children[4].children[0].getBoundingClientRect().right;
-    var subdeep4_left = deepMenu4.children[4].children[0].getBoundingClientRect().left - 5;
-    var subdeep4_top = deepMenu4.children[4].children[0].getBoundingClientRect().top - 5;
-    var subdeep4_bottom = deepMenu4.children[4].children[0].getBoundingClientRect().bottom;
+    var subdeep4_right = deepMenu4_list.children[4].children[0].getBoundingClientRect().right;
+    var subdeep4_left = deepMenu4_list.children[4].children[0].getBoundingClientRect().left - 5;
+    var subdeep4_top = deepMenu4_list.children[4].children[0].getBoundingClientRect().top - 5;
+    var subdeep4_bottom = deepMenu4_list.children[4].children[0].getBoundingClientRect().bottom;
 
-    var deepsub1_right = subdeep1.children[0].children[0].getBoundingClientRect().right;
-    var deepsub1_top = subdeep1.children[0].children[0].getBoundingClientRect().top - 5;
-    var deepsub1_bottom = subdeep1.children[0].children[0].getBoundingClientRect().bottom;
-    var deepsub2_right = subdeep1.children[3].children[0].getBoundingClientRect().right;
-    var deepsub2_top = subdeep1.children[3].children[0].getBoundingClientRect().top - 5;
-    var deepsub2_bottom = subdeep1.children[3].children[0].getBoundingClientRect().bottom;
+    var deepsub1_right = subdeep1_list.children[0].children[0].getBoundingClientRect().right;
+    var deepsub1_top = subdeep1_list.children[0].children[0].getBoundingClientRect().top - 5;
+    var deepsub1_bottom = subdeep1_list.children[0].children[0].getBoundingClientRect().bottom;
+    var deepsub2_right = subdeep1_list.children[2].children[0].getBoundingClientRect().right;
+    var deepsub2_top = subdeep1_list.children[2].children[0].getBoundingClientRect().top - 5;
+    var deepsub2_bottom = subdeep1_list.children[2].children[0].getBoundingClientRect().bottom;
     if (isShowedMenu1) {
         if (isActiveFloatMenu == true) {
             originX = pointFloat[0];
@@ -761,18 +761,18 @@ function getMenuCapturedByBubbleCursor(event) {
             modeMove = false;
         }
         if (event.pageX <= submenu1_right) {
-            if (event.pageY <= deepmenu1_top) {
+            if (event.pageY <= deepMenu1_top) {
                 if (event.pageX < submenu1_left) {
-                    point = [submenu1_left, deepmenu1_top];
+                    point = [submenu1_left, deepMenu1_top];
                 } else {
-                    point = [event.pageX, deepmenu1_top];
+                    point = [event.pageX, deepMenu1_top];
                 }
                 console.log("here");
                 isActiveSubMenu11 = true;
                 isActiveSubMenu12 = false;
                 return point;
             }
-            if (event.pageY > deepmenu1_top && event.pageY <= deepmenu1_bottom) {
+            if (event.pageY > deepMenu1_top && event.pageY <= deepMenu1_bottom) {
                 if (event.pageX < submenu1_left) {
                     point = [submenu1_left, event.pageY];
                 } else {
@@ -783,19 +783,19 @@ function getMenuCapturedByBubbleCursor(event) {
 
                 return point;
             }
-            if (event.pageY > deepmenu1_bottom && event.pageY <= deepmenu2_top &&
-                (event.pageY - deepmenu1_bottom) <= (deepmenu2_top - event.pageY)) {
+            if (event.pageY > deepMenu1_bottom && event.pageY <= deepmenu2_top &&
+                (event.pageY - deepMenu1_bottom) <= (deepmenu2_top - event.pageY)) {
                 if (event.pageX < submenu1_left) {
-                    point = [submenu1_left, deepmenu1_bottom];
+                    point = [submenu1_left, deepMenu1_bottom];
                 } else {
-                    point = [event.pageX, deepmenu1_bottom];
+                    point = [event.pageX, deepMenu1_bottom];
                 }
                 isActiveSubMenu11 = true;
                 isActiveSubMenu12 = false;
                 return point;
             }
-            if (event.pageY > deepmenu1_bottom && event.pageY <= deepmenu2_top &&
-                (event.pageY - deepmenu1_bottom) > (deepmenu2_top - event.pageY)) {
+            if (event.pageY > deepMenu1_bottom && event.pageY <= deepmenu2_top &&
+                (event.pageY - deepMenu1_bottom) > (deepmenu2_top - event.pageY)) {
                 if (event.pageX < submenu1_left) {
                     point = [submenu1_left, deepmenu2_top];
                 } else {
@@ -868,21 +868,21 @@ function getMenuCapturedByBubbleCursor(event) {
 
         }
         if (event.pageX > submenu1_right && isActiveSubMenu11) {
-            if (event.pageY <= deepmenu1_top) {
-                point = [submenu1_right, deepmenu1_top];
+            if (event.pageY <= deepMenu1_top) {
+                point = [submenu1_right, deepMenu1_top];
                 return point;
             }
-            if (event.pageY > deepmenu1_top && event.pageY <= deepmenu1_bottom) {
+            if (event.pageY > deepMenu1_top && event.pageY <= deepMenu1_bottom) {
                 point = [submenu1_right, event.pageY];
                 return point;
             }
-            if (event.pageY > deepmenu1_bottom && event.pageY <= deepmenu2_top &&
-                (event.pageY - deepmenu1_bottom) <= (deepmenu2_top - event.pageY)) {
-                point = [submenu1_right, deepmenu1_bottom];
+            if (event.pageY > deepMenu1_bottom && event.pageY <= deepmenu2_top &&
+                (event.pageY - deepMenu1_bottom) <= (deepmenu2_top - event.pageY)) {
+                point = [submenu1_right, deepMenu1_bottom];
                 return point;
             }
-            if (event.pageY > deepmenu1_bottom && event.pageY <= deepmenu2_top &&
-                (event.pageY - deepmenu1_bottom) > (deepmenu2_top - event.pageY)) {
+            if (event.pageY > deepMenu1_bottom && event.pageY <= deepmenu2_top &&
+                (event.pageY - deepMenu1_bottom) > (deepmenu2_top - event.pageY)) {
                 point = [submenu1_right, deepmenu2_top];
 
                 isActiveSubMenu11 = false;
